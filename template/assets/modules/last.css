@@ -1,0 +1,34 @@
+/* Last page */
+
+.last-page {
+	page: last_page;
+}
+
+@page last_page{
+   background-image: url(../img/RforRestofUs_Hex Pattern.svg);
+   background-repeat: no-repeat;
+   background-size: cover;
+
+   @left-top{
+      background: none;
+    }
+  
+    @left-middle{
+      background: none;
+    }
+  
+    @left-bottom{
+      background: none;
+    }
+
+    @bottom-left-corner{
+      background: none;
+    }
+
+    @bottom-right-corner{
+      content: none;
+    }
+}
+
+
+   

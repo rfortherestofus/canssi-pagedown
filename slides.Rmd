@@ -1,0 +1,888 @@
+---
+title: "No Designer Needed: How to Create Beautiful Reports Using Only R"
+output:
+  xaringan::moon_reader:
+    css: ["style.css", "default"]
+    lib_dir: libs
+    df_print: paged
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, 
+                      warning = FALSE,
+                      message = FALSE,
+                      rows.print = 5)
+```
+
+```{r}
+library(tidyverse)
+```
+
+
+class: inverse, center, middle
+
+background-image:url("img/page.jpg")
+
+# Introduction to `pagedown`
+
+---
+
+## The Problem
+
+--
+
+We often need to create PDF reports from RMarkdown
+
+--
+
+PDFs are portable
+
+--
+
+PDFs are widely used
+
+---
+
+## The Problem
+
+
+People usually think of LaTex to make PDFs from RMarkdown, but there are some problems:
+
+---
+
+### The Default Output Looks Awaful
+
+```{r, out.height='250px', fig.align = 'left'}
+knitr::include_graphics("https://i.stack.imgur.com/Nug7W.png", dpi = 300)
+```
+
+---
+
+### LaTeX is Terrible
+
+---
+
+class: middle
+
+```{r}
+tweetrmd::tweet_embed("https://twitter.com/andrewheiss/status/1268989566243004417",
+                      align = "center")
+```
+
+
+---
+
+class: middle
+
+```{r}
+tweetrmd::tweet_embed("https://twitter.com/MattCowgill/status/1249190934392307712",
+                      align = "center")
+```
+
+---
+
+class: middle
+
+```{r}
+tweetrmd::tweet_embed("https://twitter.com/thattommyhall/status/1248679614337241089",
+                      maxwidth = 500,
+                      align = "center")
+```
+
+
+
+
+
+---
+
+## The Solution: `pagedown`
+
+--
+
+How `pagedown` works:
+
+--
+
++ You create RMarkdown file
+
+--
+
++ `pagedown` uses the Javascript library Paged.js
+
+--
+
++ Paged.js "translates" CSS styles into a page format in an HTML file
+
+--
+
++ You can print this HTML file (using Chrome or another browser, in R: `pagedown::chrome_print`) to get a PDF
+
+---
+
+## Why `pagedown`?
+
+--
+
+You can use tools like HTML, CSS or Javascript to style it:
+
+--
+
++ Way easier than LaTeX to learn
+
+--
+
++ Easier to reuse or share some parts with your website or other templates (like `xaringan` or `blogdown`)
+
+--
+
++ Outputs generally looks nicer than LaTeX
+
+
+
+---
+
+class: center, middle
+
+```{r out.width='100%'}
+knitr::include_graphics("img/psc-sample.png", dpi = 300)
+```
+
+---
+
+class: center, middle
+
+```{r out.width='100%'}
+knitr::include_graphics("img/census-report-sample.png", dpi = 300)
+```
+
+---
+
+class: center, middle
+
+```{r out.width='80%'}
+knitr::include_graphics("img/cbem-sample.png", dpi = 300)
+```
+
+
+
+---
+
+## How `pagedown` Works
+
+--
+
+**`pagedown`** is an R package that provides custom output formats:
+
+--
+
++ you call it through `pagedown::html_paged` in the YAML header
+
+--
+
++ and use the `css` argument to provide a custom style sheet
+
+--
+
+```{yaml, echo = TRUE, eval = FALSE}
+---
+title: "My title"
+date: "May 2022"
+output: #<<
+  pagedown::html_paged: #<<
+    css: "assets/main.css" #<<
+knit: pagedown::chrome_print #<<
+---
+```
+
+
+---
+
+## Behind the Scenes
+
+--
+
+
+```{r, fig.align='left', out.height='300px', out.width='900px'}
+knitr::include_graphics("img/pagedown_process.png", dpi = 300)
+```
+
+--
+
+1. `pagedown` + `rmarkdown` translate the document into an **HTML** file (using Pandoc)
+
+--
+
+2. `pagedown` calls Paged.js, which puts things into the right place to look like "pages"
+
+--
+
+3. The `pagedown::chrome_print` function converts the HTML document to PDF
+
+
+---
+
+class: inverse, center, middle
+
+# HTML and CSS
+
+---
+
+## HTML and CSS
+
+--
+
+- HTML creates the bricks of your document
+
+--
+
+  + Large brick (h1, h2, h3, etc)
+
+--
+
+  + Regular text brick (p)
+
+--
+
+- CSS is what the bricks look like
+
+--
+
+  + size
+
+--
+
+  + color
+
+--
+
+  + shape
+
+
+---
+
+class: center, middle
+
+
+```{r out.width="800px"}
+knitr::include_graphics("img/html-css-lego.png", dpi = 300)
+```
+
+---
+
+## HTML in `pagedown`
+
+`pagedown` uses the Paged.js library, which gives us some specific ways to format our document you won't see anywhere else in the world of HTML
+
+---
+
+class: center, middle
+
+
+```{r out.width="45%"}
+knitr::include_graphics("img/pagedjs-overview.png", dpi = 300)
+```
+
+
+---
+
+
+class: inverse, center, middle
+
+# Design
+
+---
+
+## Fonts and Text
+
+--
+
+In `body.css`, we deal with all "normal" HTML elements:
+
+--
+
++ text with `p`
+
+--
+
++ lists with `ul` and `li` (or `ol` for numbered lists)
+
+--
+
++ headers with `h1` -> `h6`
+
+--
+
++ blockquotes with `blockquote`
+
+--
+
++ links with `a`
+
+--
+
++ footnotes with `.footnotes`
+
+--
+
+This part can be shared with other Rmd templates since it's not specific to `pagedown`
+
+---
+
+## Fonts and Text
+
+`fonts.css` imports fonts from Google Fonts (or somewhere similar) to make sure everyone has access to them (so we don't have to rely on people having them installed locally)
+
+--
+
+```{css, eval = FALSE, echo= TRUE}
+@import 'https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,700;1,400&display=swap';
+```
+
+--
+
+```{css, eval = FALSE, echo= TRUE}
+@import url("https://rsms.me/inter/inter.css");
+
+html {
+    font-family: "Inter", sans-serif;
+  }
+```
+
+
+---
+
+## Pictures
+
+Pictures (in `pictures.css`) are important since R graph outputs are images.
+
+--
+
+In the CSS, we set a limit to the size of the images, so it doesn't go off the page:
+
+```{css, eval = FALSE, echo= TRUE}
+img {
+  max-width: 100%;
+}
+```
+
+--
+
+You can reduce the parameter if you want smaller images/graphs.
+
+--
+
+If you want to handle graph size, you can also use in code chunks:
+
++ `fig.height` and `fig.width`, in inches, mostly for graphs
++ `out.height` and `out.width`, in pixels, mostly for images
+
+---
+
+## Tables
+
+--
+
+`tables.css` isn't mandatory and whether you use it depends on the package you use to output tables:
+
+--
+
++ if you use `knitr::kable()`, you can style tables elements using `tr` and `td` tags
+
+--
+
++ you could also use `kableExtra` with it and provide a style from R
+
+--
+
++ if you use `flextable` or `gt`, you style the tables with functions from those packages
+
+---
+
+class: center, middle, inverse
+
+# Layout
+
+---
+
+## Layout
+
+The core of `pagedown` customization power relies on the `layout.css` file, which handles:
+
+--
+
++ everything related to pages, margins and content in the margins, including the page numbering
+
+--
+
++ the table of contents
+
+--
+
++ the footnotes/endnotes style
+
+--
+
++ other special blocks
+
+---
+
+### Page
+
+
+To handle pages, `pagedown` has a special CSS element called `@page`:
+
+--
+
++ you can (and must) set its size at the beginning 
+
+--
+
+```{css, eval = FALSE, echo= TRUE}
+@page {
+  /* american paper size */
+  size: 8.5in 11in;
+  background-color: lightgrey;
+}
+```
+
+--
+
++ like other CSS elements, you can apply properties like background
+
+--
+
+Some special pages exists (they are named pseudo-classes):
+
+--
+
++ `@page:first`: the first page
++ `@page:blank`: every blank page
++ `@page:nth(x)`: page number x
+
+--
+
+They inherit the properties of `@page`, so be careful when you use them
+
+---
+
+### Page
+
+You can also create you own special pages (called "named page") with:
+
++ a div in the Rmd:
+
+```{md, eval = FALSE, echo= TRUE}
+:::my-named-page
+
+:::
+```
+
++ and in the CSS, a special statement:
+
+```{css, eval = FALSE, echo= TRUE}
+.my-named-page {
+	page: named_one;
+}
+
+@page named_one{
+   /*put properties here */
+}
+```
+
+---
+
+### Margins
+
+Every page has a core and margins.
+
+--
+
+And each part of the margin (called "margin boxes") has a name:
+
+---
+
+class: center, middle
+
+```{r, out.height='600px'}
+knitr::include_graphics("https://Pagedjs.org/images/margin-boxes.png",
+                        dpi = 300)
+```
+
+---
+
+### Margins
+
+This system is useful to style individual margin boxes separately:
+
+
+```{css, eval = FALSE, echo= TRUE}
+@page {
+  @left-top {
+    content: "";
+    background-color: var(--rru-lightblue);
+  }
+}
+```
+
+---
+### Margins
+
+Margin size is controlled by CSS variable in `vars.css`. They are automatically handled by Paged.js after.
+
+```{css, eval = FALSE, echo= TRUE}
+:root {
+  /* margin */
+  --Pagedjs-margin-left: 0.75in;
+  --Pagedjs-margin-right: 0.75in;
+  --Pagedjs-margin-bottom: 1.25in;
+  --Pagedjs-margin-top: 1in;
+}
+```
+
+---
+
+### Tip: Set Page and Margins First
+
+You should set the dimension of your page and margins first before setting up everything else.
+
+
+---
+
+### Tip: Add Image in Margin Box
+
+If you want an image (like a logo) in a margin box, put it as a background image and set `content:"";`
+
+
+```{r eval = FALSE, echo = TRUE}
+@bottom-left-corner {
+    content: ""; #<<
+    background-image: url(../img/rru-logo-blue.svg); #<<
+    background-repeat: no-repeat;
+    background-size: 0.5in;
+    background-position: center;
+  }
+```
+
+
+---
+
+
+### Tip: Make a Two-Column Layout
+
+Sometimes, you need to put elements side by side. It's often the case when you create a parametrized report where you want to put text and graphs together.
+
+--
+
+In this case, you have to create two things, one in the RMarkdown:
+
+```{md, eval = FALSE, echo= TRUE}
+:::wrap-columns
+:::columns-50
+Some content here
+:::
+::: columns-50
+Some content here
+:::
+:::
+```
+
+--
+
+And one in the CSS:
+
+```{css, eval = FALSE, echo= TRUE}
+.wrap-columns {
+  display: flex;
+  padding: 0 0pt;
+}
+
+.columns-50 {flex: 50%;}
+```
+
+---
+
+### Tip: Make a Two-Column Layout
+
+This create two levels of blocks where your content will be put:
+
+```{r, fig.align='left', out.height='300px', out.width='600px'}
+knitr::include_graphics("img/two_columns.png", dpi = 300)
+```
+
+--
+
+You can also adjust the size of columns inside the CSS or create more than two if needed.
+
+---
+
+class: center, middle, inverse
+
+## Table of Contents and Page Numbers
+
+---
+
+### Table of Contents
+
+You can setup the table of contents using `toc: TRUE` in the YAML 
+
+```{yaml, echo = TRUE, eval = FALSE}
+---
+title: "My title"
+output:
+  pagedown::html_paged:
+    toc: TRUE
+---
+```
+
+If you are using a custom function to output the report, don't forgot to add the `toc = TRUE` argument !
+
+---
+
+### Table of Contents
+
+Table of contents can be set and managed through an instruction given by the default CSS of `pagedown`.
+
+The following command the aspect of the list
+
+```{css, eval = FALSE, echo= TRUE}
+.toc ul, .lot ul, .lof ul {
+  list-style: none;
+  padding-left: 0;
+  overflow-x: hidden;
+}
+.toc li li {padding-left: 1em;}
+.toc a, .lot a, .lof a {
+  text-decoration: none;
+  background: white;
+  padding-right: .33em;
+}
+
+.toc .leaders::before, .lot .leaders::before, .lof .leaders::before {
+  float: left;
+  width: 0;
+  white-space: nowrap;
+  content: ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  ";
+}
+
+```
+
+---
+
+### Table of Contents
+
+And the other ones the aspect of the links
+
+```{css, eval = FALSE, echo= TRUE}
+.toc a::after, .lot a::after, .lof a::after {
+  /* content: leader(dotted) target-counter(attr(href), page); */
+  content: target-counter(attr(href), page);
+  float: right;
+  background: white;
+}
+.toc a.front-matter-ref::after, .lot a.front-matter-ref::after, .lof a.front-matter-ref::after {
+  /* content: leader(dotted) target-counter(attr(href), page, lower-roman); */
+  content: target-counter(attr(href), page, lower-roman);
+}
+```
+
+---
+
+### Page Numbers
+
+You can write page number as a content inside of a CSS element.
+
+Combined with a margin box position, it's powerful.
+
+```{css, eval = FALSE, echo= TRUE}
+@page {
+  @bottom-right-corner {
+    content: counter(page); #<<
+    color: grey;
+    font-size: 8pt;
+  }
+}
+```
+
+---
+
+### Footnotes and Endnotes
+
+--
+
+You can create footnotes in your document with `^[my footnote]`:
+
+--
+
+By default, footnotes are endnotes
+
+--
+
+But you can render them as footnotes using `paged-footnotes: true` in the YAML header.
+
+```{yaml, echo = TRUE, eval = FALSE}
+---
+title: "My title"
+date: "May 2022"
+output:
+  pagedown::html_paged:
+    css: "assets/main.css"
+paged-footnotes: true #<<
+knit: pagedown::chrome_print
+---
+```
+
+
+---
+
+### Footnotes and Endnotes
+
+If you need to change the footnote style, you can access it through `.footnote` and create your own CSS for it.
+
+--
+
+Footnotes will go above the bottom-margin, reducing available space. You may need to adjust the size of this margin to fit your needs.
+
+---
+
+class: center, middle, inverse
+
+# Front and Back Covers
+
+
+---
+
+## Front Cover
+
+--
+
+The front cover page lives in `title.css`:
+
+--
+
++ it contains a `@page:first{}` pseudo-classes which create the first page
+
+--
+
+
++ plus the style related to the title, date or author
+
+--
+
+To define the end of the page, you can either:
+
++ use the `\newpage` statement in the Rmd -> this is the easiest solution
+
+--
+
++ create a void div on page 2, which has a `page-break-before:always` property on the HTML side
+
+---
+
+## Front Cover
+
+--
+
+Some tips related to the first page:
+
+--
+
++ If you have multiple images on the first side, to avoid complex positioning issues, it's often easier to merge them into one using Paint, GIMP, etc
+
+--
+
++ You are in a page. This means, you can position titles or other elements in an absolute way by specifying margins like this:
+
+```{css, eval = FALSE, echo= TRUE}
+h1.title {
+  position: absolute; #<<
+  margin-top: 8.2in; #<<
+  margin-right: 2in; #<<
+  line-height: 0.6in;
+  color: white;
+  font-size: 38pt;
+  font-family: var(--font-title);
+  color: var(--colibri-purple);
+}
+```
+
+---
+
+## Front Cover
+
++ You must overturn every changes made in `layout.css` or `body.css` regarding the page margins/background and the `h1`/ `h2` elements. By default, the front cover inherits everything.
+
+```{css, eval = FALSE, echo= TRUE}
+@page:first {
+
+  background: url(../img/RfortheRestofUs_Templates_Wallpapers-4.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  @left-top {background: none;}
+
+  @left-middle {background: none;}
+
+  @left-bottom {background: none;}
+
+  @bottom-left-corner {background: none;}
+
+  @bottom-right-corner{content: none;}
+}
+```
+
+---
+
+## Back Cover
+
+The back cover in `last.css` works like the front cover but you don't have a `@page:last` pseudo-classes.
+
+--
+
++ you have to hack it by creating a named page in the Rmd 
+
+```{md, eval = FALSE, echo= TRUE}
+:::last-page
+
+:::
+```
+
+--
+
++ and in the CSS:
+
+```{css, eval = FALSE, echo= TRUE}
+.last-page {
+	page: last_page;
+}
+
+@page last_page{
+   background-image: url(../img/RforRestofUs_Hex Pattern.svg);
+   background-repeat: no-repeat;
+   background-size: cover;
+}
+```
+
+---
+
+class: inverse, center, middle
+
+background-image:url("img/mine.jpg")
+
+# Resources
+
+---
+
+## Some useful resources
+
++ To learn more about `pagedown`, you can have a look at the [documentation](https://pagedown.rbind.io/) or the [issues](https://github.com/rstudio/pagedown/issues) on Github
+
++ To have a deeper knowledge on the foundations, look at the Paged.js [documentation](https://Pagedjs.org/documentation/) or their [Gitlab](https://gitlab.coko.foundation/Pagedjs/Pagedjs)
+
++ Markdown [guide](https://www.markdownguide.org/basic-syntax/), once again
+
++ To learn HTML and CSS, you can either have a look at Mozilla tutorial ([HTML](https://developer.mozilla.org/en/docs/Web/HTML) + [CSS](https://developer.mozilla.org/en/docs/Web/CSS)) or the W3C tutorial ([HTML](https://www.w3schools.com/html/) + [CSS](https://www.w3schools.com/css/))
