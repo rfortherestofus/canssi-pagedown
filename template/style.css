@@ -1,4 +1,5 @@
 /* Columns */
+
 .wrap-columns {
   display: flex;
   padding: 0 0pt;
@@ -18,9 +19,9 @@
 
 /* Cover */
 
-@page:first {
-
-  background: linear-gradient(130deg, black, transparent), url(assets/img/RfortheRestofUs_Templates_Wallpapers-4.svg);
+@page: first{
+  background: linear-gradient(130deg, black, transparent),
+    url(assets/img/RfortheRestofUs_Templates_Wallpapers-4.svg);
   background-repeat: no-repeat;
   background-size: cover;
 
@@ -36,15 +37,14 @@
     background: none;
   }
 
-  @bottom-left-corner{
+  @bottom-left-corner {
     background: none;
   }
 
-  @bottom-right-corner{
+  @bottom-right-corner {
     content: none;
   }
-
-}
+};
 
 h1.title {
   color: white;
@@ -76,7 +76,6 @@ h2.date {
     color: grey;
     font-size: 10pt;
   }
-
 }
 
 /* Fonts */
