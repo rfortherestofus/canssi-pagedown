@@ -1,6 +1,6 @@
 ---
-title: "My title"
-date: "May 2022"
+title: "My Report"
+date: "November 2022"
 output:
   pagedown::html_paged:
     css: "style.css"
@@ -49,13 +49,29 @@ Vivamus tempor congue magna vitae accumsan. Etiam non sem eu urna aliquam accums
 
 Donec congue metus et accumsan ornare. Donec non feugiat massa. In tempor tellus vel ligula mollis, sit amet maximus risus mollis. Integer sit amet consectetur ipsum. Pellentesque eleifend lacinia ipsum, at tincidunt tortor suscipit vel. Nullam nisl mi, fringilla nec interdum quis, vehicula sed justo. Donec rhoncus massa sed sapien varius aliquam. Donec feugiat lacus eu quam vestibulum, eu condimentum dolor posuere. Nam vitae mattis nisi, in finibus risus. In volutpat volutpat justo at tempor. Duis laoreet elit neque, non vestibulum magna aliquet a. Suspendisse at finibus massa. Etiam a metus ac turpis commodo viverra accumsan sed neque. Mauris feugiat tempus mi, sit amet congue tortor vulputate nec. Vestibulum lacus orci, luctus nec enim at, scelerisque tempor sapien.
 
-```{r graph}
+<div class="wrap-columns">
+
+<div class="columns-50">
+```{r}
 ggplot(mtcars, aes(x = mpg, y = disp, color = as.character(cyl))) +
   geom_point(size = 2) +
   scale_color_viridis_d(name = "Cyl") +
   labs(title = "Some title for this nice graph") +
   theme_minimal()
 ```
+</div>
+
+<div class="columns-50">
+```{r}
+ggplot(mtcars, aes(x = mpg, y = disp, color = as.character(cyl))) +
+  geom_point(size = 2) +
+  scale_color_viridis_d(name = "Cyl") +
+  labs(title = "Some title for this nice graph") +
+  theme_minimal()
+```
+</div>
+
+</div>
 
 Vivamus vel sollicitudin sem. Duis at mi vitae nunc blandit ultrices. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Quisque commodo, eros a egestas rhoncus, mi nunc interdum odio, vitae aliquet ligula neque quis ex. Sed efficitur lorem non sapien luctus aliquam. Aliquam interdum gravida neque nec ornare. Etiam vehicula pretium diam. Maecenas lacus velit, pharetra vel pellentesque sit amet, pellentesque vitae felis.
 

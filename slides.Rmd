@@ -46,12 +46,25 @@ PDFs are portable
 
 PDFs are widely used
 
+
 ---
 
-## The Problem
+## Potential Solution #1
+
+Work with a graphic designer
+
+---
+
+class: center, middle
+
+![](img/ivac-sample.png)
+
+---
+
+## Potential Solution #2
 
 
-People usually think of LaTex to make PDFs from RMarkdown, but there are some problems:
+R users usually think of LaTex to make PDFs from RMarkdown, but there are some problems:
 
 ---
 
@@ -194,7 +207,7 @@ title: "My title"
 date: "May 2022"
 output: #<<
   pagedown::html_paged: #<<
-    css: "assets/main.css" #<<
+    css: "style.css" #<<
 knit: pagedown::chrome_print #<<
 ---
 ```
