@@ -9,23 +9,15 @@ img {
   padding: 0 0pt;
 }
 
-.columns-33 {
-  flex: 33%;
-}
-
-.columns-66 {
-  flex: 66%;
-}
-
 .columns-50 {
   flex: 50%;
 }
 
 /* Cover */
 
-@page: first {
-  background: linear-gradient(130deg, black, transparent),
-    url(assets/img/RfortheRestofUs_Templates_Wallpapers-4.svg);
+@page:first {
+
+  background: linear-gradient(130deg, black, transparent), url(dark-hex-pattern.svg);
   background-repeat: no-repeat;
   background-size: cover;
 
@@ -41,13 +33,14 @@ img {
     background: none;
   }
 
-  @bottom-left-corner {
+  @bottom-left-corner{
     background: none;
   }
 
-  @bottom-right-corner {
+  @bottom-right-corner{
     content: none;
   }
+
 }
 
 h1.title {
@@ -69,7 +62,7 @@ h2.date {
 
   @bottom-left-corner {
     content: "";
-    background-image: url(assets/img/rru-logo-blue.svg);
+    background-image: url(rru-logo-blue.svg);
     background-repeat: no-repeat;
     background-size: 0.5in;
     background-position: center;

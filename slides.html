@@ -70,9 +70,11 @@ R users usually think of LaTex to make PDFs from RMarkdown, but there are some p
 
 ---
 
-### The Default Output Looks Awaful
+### The Default Output Looks Awful
 
-&lt;img src="https://i.stack.imgur.com/Nug7W.png" height="250px" style="display: block; margin: auto auto auto 0;" /&gt;
+--
+
+&lt;img src="https://i.stack.imgur.com/Nug7W.png" height="250px" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -114,7 +116,7 @@ How `pagedown` works:
 
 --
 
-+ You create RMarkdown file
++ You create an RMarkdown file
 
 --
 
@@ -134,7 +136,7 @@ How `pagedown` works:
 
 --
 
-You can use tools like HTML, CSS or Javascript to style it:
+You can use tools like HTML and CSS your documents:
 
 --
 
@@ -282,154 +284,22 @@ class: center, middle
 
 &lt;img src="img/pagedjs-overview.png" width="45%" /&gt;
 
-
 ---
-
 
 class: inverse, center, middle
 
-# Design
+# Make a Template
 
 ---
 
-## Fonts and Text
+class: inverse, center, middle
 
---
-
-In `body.css`, we deal with all "normal" HTML elements:
-
---
-
-+ text with `p`
-
---
-
-+ lists with `ul` and `li` (or `ol` for numbered lists)
-
---
-
-+ headers with `h1` -&gt; `h6`
-
---
-
-+ blockquotes with `blockquote`
-
---
-
-+ links with `a`
-
---
-
-+ footnotes with `.footnotes`
-
---
-
-This part can be shared with other Rmd templates since it's not specific to `pagedown`
-
----
-
-## Fonts and Text
-
-`fonts.css` imports fonts from Google Fonts (or somewhere similar) to make sure everyone has access to them (so we don't have to rely on people having them installed locally)
-
---
-
-
-```css
-@import 'https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,700;1,400&amp;display=swap';
-```
-
---
-
-
-```css
-@import url("https://rsms.me/inter/inter.css");
-
-html {
-    font-family: "Inter", sans-serif;
-  }
-```
+# Page Size
 
 
 ---
 
-## Pictures
-
-Pictures (in `pictures.css`) are important since R graph outputs are images.
-
---
-
-In the CSS, we set a limit to the size of the images, so it doesn't go off the page:
-
-
-```css
-img {
-  max-width: 100%;
-}
-```
-
---
-
-You can reduce the parameter if you want smaller images/graphs.
-
---
-
-If you want to handle graph size, you can also use in code chunks:
-
-+ `fig.height` and `fig.width`, in inches, mostly for graphs
-+ `out.height` and `out.width`, in pixels, mostly for images
-
----
-
-## Tables
-
---
-
-`tables.css` isn't mandatory and whether you use it depends on the package you use to output tables:
-
---
-
-+ if you use `knitr::kable()`, you can style tables elements using `tr` and `td` tags
-
---
-
-+ you could also use `kableExtra` with it and provide a style from R
-
---
-
-+ if you use `flextable` or `gt`, you style the tables with functions from those packages
-
----
-
-class: center, middle, inverse
-
-# Layout
-
----
-
-## Layout
-
-The core of `pagedown` customization power relies on the `layout.css` file, which handles:
-
---
-
-+ everything related to pages, margins and content in the margins, including the page numbering
-
---
-
-+ the table of contents
-
---
-
-+ the footnotes/endnotes style
-
---
-
-+ other special blocks
-
----
-
-### Page
+## Page Size
 
 
 To handle pages, `pagedown` has a special CSS element called `@page`:
@@ -443,437 +313,206 @@ To handle pages, `pagedown` has a special CSS element called `@page`:
 
 ```css
 @page {
-  /* american paper size */
   size: 8.5in 11in;
-  background-color: lightgrey;
 }
 ```
 
---
-
-+ like other CSS elements, you can apply properties like background
-
---
-
-Some special pages exists (they are named pseudo-classes):
-
---
-
-+ `@page:first`: the first page
-+ `@page:blank`: every blank page
-+ `@page:nth(x)`: page number x
-
---
-
-They inherit the properties of `@page`, so be careful when you use them
 
 ---
 
-### Page
+class: inverse, center, middle
 
-You can also create you own special pages (called "named page") with:
-
-+ a div in the Rmd:
-
-
-```md
-:::my-named-page
-
-:::
-```
-
-+ and in the CSS, a special statement:
-
-
-```css
-.my-named-page {
-	page: named_one;
-}
-
-@page named_one{
-   /*put properties here */
-}
-```
+# Margins
 
 ---
 
-### Margins
-
-Every page has a core and margins.
-
---
-
-And each part of the margin (called "margin boxes") has a name:
-
----
-
-class: center, middle
-
-&lt;img src="https://Pagedjs.org/images/margin-boxes.png" height="600px" /&gt;
-
----
-
-### Margins
-
-This system is useful to style individual margin boxes separately:
-
-
-
-```css
-@page {
-  @left-top {
-    content: "";
-    background-color: var(--rru-lightblue);
-  }
-}
-```
-
----
-### Margins
-
-Margin size is controlled by CSS variable in `vars.css`. They are automatically handled by Paged.js after.
+## Margins
 
 
 ```css
 :root {
-  /* margin */
-  --Pagedjs-margin-left: 0.75in;
-  --Pagedjs-margin-right: 0.75in;
-  --Pagedjs-margin-bottom: 1.25in;
-  --Pagedjs-margin-top: 1in;
+  --pagedjs-margin-left: 0.75in;
+  --pagedjs-margin-right: 0.75in;
+  --pagedjs-margin-bottom: 1.25in;
+  --pagedjs-margin-top: 1in;
+}
+```
+
+
+---
+
+class: inverse, center, middle
+
+# Fonts
+
+---
+
+## Fonts
+
+
+```css
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;display=swap");
+```
+
+---
+
+## Fonts
+
+
+```css
+body {
+  font-family: Inter, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+}
+
+p {
+  font-size: 12pt;
 }
 ```
 
 ---
 
-### Tip: Set Page and Margins First
+## Fonts
 
-You should set the dimension of your page and margins first before setting up everything else.
+
+```css
+blockquote {
+  margin-inline-start: 0;
+  color: #6cabdd;
+  padding-left: 10pt;
+  border-left: 2pt solid #6cabdd;
+  font-style: italic;
+}
+```
 
 
 ---
 
-### Tip: Add Image in Margin Box
+class: inverse, center, middle
 
-If you want an image (like a logo) in a margin box, put it as a background image and set `content:"";`
+# Footer
+
+---
+
+## Footer
 
 
+```css
+@page {
+  size: 8.5in 11in;
 
-```r
-@bottom-left-corner {
-*   content: "";
-*   background-image: url(../img/rru-logo-blue.svg);
+  @bottom-left-corner {
+    content: "";
+    background-image: url(rru-logo-blue.svg);
     background-repeat: no-repeat;
     background-size: 0.5in;
     background-position: center;
   }
+
+  @bottom-right-corner {
+    content: counter(page);
+    color: grey;
+    font-size: 10pt;
+  }
+
+}
 ```
+
+---
+
+class: inverse, center, middle
+
+# Cover Page
 
 
 ---
 
 
-### Tip: Make a Two-Column Layout
+```css
+@page:first{
+  background: linear-gradient(130deg, black, transparent),
+    url(dark-hex-pattern.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
 
-Sometimes, you need to put elements side by side. It's often the case when you create a parametrized report where you want to put text and graphs together.
+  @left-top {
+    background: none;
+  }
 
---
+  @left-middle {
+    background: none;
+  }
 
-In this case, you have to create two things, one in the RMarkdown:
+  @left-bottom {
+    background: none;
+  }
 
+  @bottom-left-corner {
+    background: none;
+  }
 
-```md
-:::wrap-columns
-:::columns-50
-Some content here
-:::
-::: columns-50
-Some content here
-:::
-:::
+  @bottom-right-corner {
+    content: none;
+  }
+};
 ```
 
---
 
-And one in the CSS:
+---
+
+## Cover page
 
 
 ```css
+h1.title {
+  color: white;
+  font-size: 36pt;
+}
+
+h2.date {
+  color: white;
+  font-weight: normal;
+  font-size: 18pt;
+  page-break-after: always;
+}
+```
+
+---
+
+class: inverse, center, middle
+
+# Multicolumn Layouts
+
+---
+
+## Multicolumn Layouts
+
+--
+
+&lt;img src="img/two_columns.png" width="700px" height="350px" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+
+## Multicolumn Layouts
+
+
+```css
+img {
+  max-width: 100%;
+}
+
 .wrap-columns {
   display: flex;
   padding: 0 0pt;
 }
 
-.columns-50 {flex: 50%;}
-```
-
----
-
-### Tip: Make a Two-Column Layout
-
-This create two levels of blocks where your content will be put:
-
-&lt;img src="img/two_columns.png" width="600px" height="300px" style="display: block; margin: auto auto auto 0;" /&gt;
-
---
-
-You can also adjust the size of columns inside the CSS or create more than two if needed.
-
----
-
-class: center, middle, inverse
-
-## Table of Contents and Page Numbers
-
----
-
-### Table of Contents
-
-You can setup the table of contents using `toc: TRUE` in the YAML 
-
-
-```yaml
----
-title: "My title"
-output:
-  pagedown::html_paged:
-    toc: TRUE
----
-```
-
-If you are using a custom function to output the report, don't forgot to add the `toc = TRUE` argument !
-
----
-
-### Table of Contents
-
-Table of contents can be set and managed through an instruction given by the default CSS of `pagedown`.
-
-The following command the aspect of the list
-
-
-```css
-.toc ul, .lot ul, .lof ul {
-  list-style: none;
-  padding-left: 0;
-  overflow-x: hidden;
-}
-.toc li li {padding-left: 1em;}
-.toc a, .lot a, .lof a {
-  text-decoration: none;
-  background: white;
-  padding-right: .33em;
-}
-
-.toc .leaders::before, .lot .leaders::before, .lof .leaders::before {
-  float: left;
-  width: 0;
-  white-space: nowrap;
-  content: ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  ";
-}
-
-```
-
----
-
-### Table of Contents
-
-And the other ones the aspect of the links
-
-
-```css
-.toc a::after, .lot a::after, .lof a::after {
-  /* content: leader(dotted) target-counter(attr(href), page); */
-  content: target-counter(attr(href), page);
-  float: right;
-  background: white;
-}
-.toc a.front-matter-ref::after, .lot a.front-matter-ref::after, .lof a.front-matter-ref::after {
-  /* content: leader(dotted) target-counter(attr(href), page, lower-roman); */
-  content: target-counter(attr(href), page, lower-roman);
-}
-```
-
----
-
-### Page Numbers
-
-You can write page number as a content inside of a CSS element.
-
-Combined with a margin box position, it's powerful.
-
-
-```css
-@page {
-  @bottom-right-corner {
-*   content: counter(page);
-    color: grey;
-    font-size: 8pt;
-  }
-}
-```
-
----
-
-### Footnotes and Endnotes
-
---
-
-You can create footnotes in your document with `^[my footnote]`:
-
---
-
-By default, footnotes are endnotes
-
---
-
-But you can render them as footnotes using `paged-footnotes: true` in the YAML header.
-
-
-```yaml
----
-title: "My title"
-date: "May 2022"
-output:
-  pagedown::html_paged:
-    css: "assets/main.css"
-*paged-footnotes: true
-knit: pagedown::chrome_print
----
-```
-
-
----
-
-### Footnotes and Endnotes
-
-If you need to change the footnote style, you can access it through `.footnote` and create your own CSS for it.
-
---
-
-Footnotes will go above the bottom-margin, reducing available space. You may need to adjust the size of this margin to fit your needs.
-
----
-
-class: center, middle, inverse
-
-# Front and Back Covers
-
-
----
-
-## Front Cover
-
---
-
-The front cover page lives in `title.css`:
-
---
-
-+ it contains a `@page:first{}` pseudo-classes which create the first page
-
---
-
-
-+ plus the style related to the title, date or author
-
---
-
-To define the end of the page, you can either:
-
-+ use the `\newpage` statement in the Rmd -&gt; this is the easiest solution
-
---
-
-+ create a void div on page 2, which has a `page-break-before:always` property on the HTML side
-
----
-
-## Front Cover
-
---
-
-Some tips related to the first page:
-
---
-
-+ If you have multiple images on the first side, to avoid complex positioning issues, it's often easier to merge them into one using Paint, GIMP, etc
-
---
-
-+ You are in a page. This means, you can position titles or other elements in an absolute way by specifying margins like this:
-
-
-```css
-h1.title {
-* position: absolute;
-* margin-top: 8.2in;
-* margin-right: 2in;
-  line-height: 0.6in;
-  color: white;
-  font-size: 38pt;
-  font-family: var(--font-title);
-  color: var(--colibri-purple);
-}
-```
-
----
-
-## Front Cover
-
-+ You must overturn every changes made in `layout.css` or `body.css` regarding the page margins/background and the `h1`/ `h2` elements. By default, the front cover inherits everything.
-
-
-```css
-@page:first {
-
-  background: url(../img/RfortheRestofUs_Templates_Wallpapers-4.svg);
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  @left-top {background: none;}
-
-  @left-middle {background: none;}
-
-  @left-bottom {background: none;}
-
-  @bottom-left-corner {background: none;}
-
-  @bottom-right-corner{content: none;}
-}
-```
-
----
-
-## Back Cover
-
-The back cover in `last.css` works like the front cover but you don't have a `@page:last` pseudo-classes.
-
---
-
-+ you have to hack it by creating a named page in the Rmd 
-
-
-```md
-:::last-page
-
-:::
-```
-
---
-
-+ and in the CSS:
-
-
-```css
-.last-page {
-	page: last_page;
-}
-
-@page last_page{
-   background-image: url(../img/RforRestofUs_Hex Pattern.svg);
-   background-repeat: no-repeat;
-   background-size: cover;
+.columns-50 {
+  flex: 50%;
 }
 ```
 
@@ -887,13 +526,17 @@ background-image:url("img/mine.jpg")
 
 ---
 
-## Some useful resources
+## Resources
+
+--
 
 + To learn more about `pagedown`, you can have a look at the [documentation](https://pagedown.rbind.io/) or the [issues](https://github.com/rstudio/pagedown/issues) on Github
 
-+ To have a deeper knowledge on the foundations, look at the Paged.js [documentation](https://Pagedjs.org/documentation/) or their [Gitlab](https://gitlab.coko.foundation/Pagedjs/Pagedjs)
+--
 
-+ Markdown [guide](https://www.markdownguide.org/basic-syntax/), once again
++ To get a deeper knowledge of the foundations, look at the Paged.js [documentation](https://Pagedjs.org/documentation/) or their [Gitlab](https://gitlab.coko.foundation/Pagedjs/Pagedjs)
+
+--
 
 + To learn HTML and CSS, you can either have a look at Mozilla tutorial ([HTML](https://developer.mozilla.org/en/docs/Web/HTML) + [CSS](https://developer.mozilla.org/en/docs/Web/CSS)) or the W3C tutorial ([HTML](https://www.w3schools.com/html/) + [CSS](https://www.w3schools.com/css/))
     </textarea>

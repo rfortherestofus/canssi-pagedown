@@ -2,7 +2,7 @@
 
 @page:first {
 
-  background: linear-gradient(130deg, black, transparent), url(assets/img/RfortheRestofUs_Templates_Wallpapers-4.svg);
+  background: linear-gradient(130deg, black, transparent), url(dark-hex-pattern.svg);
   background-repeat: no-repeat;
   background-size: cover;
 
@@ -47,7 +47,7 @@ h2.date {
 
   @bottom-left-corner {
     content: "";
-    background-image: url(assets/img/rru-logo-blue.svg);
+    background-image: url(rru-logo-blue.svg);
     background-repeat: no-repeat;
     background-size: 0.5in;
     background-position: center;
@@ -58,7 +58,6 @@ h2.date {
     color: grey;
     font-size: 10pt;
   }
-
 }
 
 /* Fonts */
