@@ -1,5 +1,9 @@
 /* Columns */
 
+img {
+  max-width: 100%;
+}
+
 .wrap-columns {
   display: flex;
   padding: 0 0pt;
@@ -19,7 +23,7 @@
 
 /* Cover */
 
-@page: first{
+@page: first {
   background: linear-gradient(130deg, black, transparent),
     url(assets/img/RfortheRestofUs_Templates_Wallpapers-4.svg);
   background-repeat: no-repeat;
@@ -44,7 +48,7 @@
   @bottom-right-corner {
     content: none;
   }
-};
+}
 
 h1.title {
   color: white;
