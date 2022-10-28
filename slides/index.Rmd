@@ -306,6 +306,12 @@ knitr::include_graphics("img/pagedjs-overview.png", dpi = 300)
 
 class: inverse, center, middle
 
+# Let's Make a PDF!
+
+---
+
+class: inverse, center, middle
+
 # Make a Template
 
 ---
