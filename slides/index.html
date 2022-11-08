@@ -84,7 +84,7 @@ R users usually think of LaTex to make PDFs from RMarkdown, but there are some p
 
 class: middle
 
-<blockquote class="twitter-tweet" align="center" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">why is LaTeX</p>&mdash; 👻🎃 Andrew Friiights 🧛👻 (@andrewheiss) <a href="https://twitter.com/andrewheiss/status/1268989566243004417?ref_src=twsrc%5Etfw">June 5, 2020</a></blockquote>
+<blockquote class="twitter-tweet" align="center" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">why is LaTeX</p>&mdash; 🍁🍂 🐘 @andrew@fediscience.org 🐘 🍂🍁 (PARODY?) (@andrewheiss) <a href="https://twitter.com/andrewheiss/status/1268989566243004417?ref_src=twsrc%5Etfw">June 5, 2020</a></blockquote>
 
 
 
@@ -99,7 +99,7 @@ class: middle
 
 class: middle
 
-<blockquote class="twitter-tweet" align="center" data-width="500" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">So nice to see this in print at last <a href="https://t.co/9wVjm3CtvE">pic.twitter.com/9wVjm3CtvE</a></p>&mdash; Dave Jarvoo (@thattommyhall) <a href="https://twitter.com/thattommyhall/status/1248679614337241089?ref_src=twsrc%5Etfw">April 10, 2020</a></blockquote>
+<blockquote class="twitter-tweet" align="center" data-width="500" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">So nice to see this in print at last <a href="https://t.co/9wVjm3CtvE">pic.twitter.com/9wVjm3CtvE</a></p>&mdash; thattommyhall (@thattommyhall) <a href="https://twitter.com/thattommyhall/status/1248679614337241089?ref_src=twsrc%5Etfw">April 10, 2020</a></blockquote>
 
 
 
@@ -108,27 +108,9 @@ class: middle
 
 ---
 
-## The Solution: `pagedown`
+class: inverse, center, middle
 
---
-
-How `pagedown` works:
-
---
-
-+ You create an RMarkdown file
-
---
-
-+ `pagedown` uses the Javascript library Paged.js
-
---
-
-+ Paged.js "translates" CSS styles into a page format in an HTML file
-
---
-
-+ You can print this HTML file (using Chrome or another browser, in R: `pagedown::chrome_print`) to get a PDF
+# The Solution: `pagedown`
 
 ---
 
@@ -288,13 +270,22 @@ class: center, middle
 
 class: inverse, center, middle
 
-# Let's Make a PDF!
+# Let's Make a `pagedown` Report!
 
 ---
 
-class: inverse, center, middle
+## Install `pagedown`
 
-# Make a Template
+
+```r
+install.packages("pagedown")
+```
+
+---
+
+## Create a Document
+
+![](img/pagedown-from-template.png)
 
 ---
 
@@ -556,6 +547,21 @@ class: center, middle
 
 ![](img/windmill.gif)
 
+---
+
+class: inverse, center, middle
+
+# Quarto?
+
+---
+
+class: center, middle
+
+![](img/quarto-2023.png)
+
+???
+
+https://github.com/quarto-dev/quarto-cli/discussions/1716
 
 ---
 

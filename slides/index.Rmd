@@ -115,27 +115,9 @@ tweetrmd::tweet_embed("https://twitter.com/thattommyhall/status/1248679614337241
 
 ---
 
-## The Solution: `pagedown`
+class: inverse, center, middle
 
---
-
-How `pagedown` works:
-
---
-
-+ You create an RMarkdown file
-
---
-
-+ `pagedown` uses the Javascript library Paged.js
-
---
-
-+ Paged.js "translates" CSS styles into a page format in an HTML file
-
---
-
-+ You can print this HTML file (using Chrome or another browser, in R: `pagedown::chrome_print`) to get a PDF
+# The Solution: `pagedown`
 
 ---
 
@@ -306,13 +288,21 @@ knitr::include_graphics("img/pagedjs-overview.png", dpi = 300)
 
 class: inverse, center, middle
 
-# Let's Make a PDF!
+# Let's Make a `pagedown` Report!
 
 ---
 
-class: inverse, center, middle
+## Install `pagedown`
 
-# Make a Template
+```{r eval = FALSE, echo = TRUE}
+install.packages("pagedown")
+```
+
+---
+
+## Create a Document
+
+![](img/pagedown-from-template.png)
 
 ---
 
@@ -567,6 +557,21 @@ class: center, middle
 
 ![](img/windmill.gif)
 
+---
+
+class: inverse, center, middle
+
+# Quarto?
+
+---
+
+class: center, middle
+
+![](img/quarto-2023.png)
+
+???
+
+https://github.com/quarto-dev/quarto-cli/discussions/1716
 
 ---
 
