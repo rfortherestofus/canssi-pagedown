@@ -6,18 +6,6 @@
   background-repeat: no-repeat;
   background-size: cover;
 
-  @left-top {
-    background: none;
-  }
-
-  @left-middle {
-    background: none;
-  }
-
-  @left-bottom {
-    background: none;
-  }
-
   @bottom-left-corner{
     background: none;
   }

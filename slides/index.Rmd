@@ -28,7 +28,7 @@ class: inverse, center, middle
 
 background-image:url("img/page.jpg")
 
-# Introduction to `pagedown`
+# `pagedown`
 
 ---
 
@@ -125,7 +125,7 @@ class: inverse, center, middle
 
 --
 
-You can use tools like HTML and CSS your documents:
+You can use tools like HTML and CSS to format your documents:
 
 --
 
@@ -133,7 +133,7 @@ You can use tools like HTML and CSS your documents:
 
 --
 
-+ Easier to reuse or share some parts with your website or other templates (like `xaringan` or `blogdown`)
++ Easier to reuse parts on a website or in other formats (like `xaringan` or `blogdown`)
 
 --
 
@@ -406,6 +406,15 @@ class: inverse, center, middle
 
 ---
 
+class: center, middle
+
+```{r out.width="45%"}
+knitr::include_graphics("img/pagedjs-overview.png", dpi = 300)
+```
+
+---
+
+
 ## Footer
 
 ```{css, eval = FALSE, echo = TRUE}
@@ -438,24 +447,14 @@ class: inverse, center, middle
 
 ---
 
+## Cover Page
+
 ```{css, eval = FALSE, echo = TRUE}
 @page:first{
   background: linear-gradient(130deg, black, transparent),
     url(dark-hex-pattern.svg);
   background-repeat: no-repeat;
   background-size: cover;
-
-  @left-top {
-    background: none;
-  }
-
-  @left-middle {
-    background: none;
-  }
-
-  @left-bottom {
-    background: none;
-  }
 
   @bottom-left-corner {
     background: none;
@@ -470,7 +469,7 @@ class: inverse, center, middle
 
 ---
 
-## Cover page
+## Cover Page
 
 ```{css, eval = FALSE, echo = TRUE}
 h1.title {
@@ -491,6 +490,15 @@ h2.date {
 class: inverse, center, middle
 
 # Multicolumn Layouts
+
+---
+
+class: center, middle
+
+```{r out.width='100%'}
+knitr::include_graphics("img/psc-sample.png", dpi = 300)
+```
+
 
 ---
 
@@ -522,6 +530,13 @@ img {
   flex: 50%;
 }
 ```
+
+---
+
+class: center, middle
+
+![](img/ivac-2022-sample.png)
+
 
 ---
 
