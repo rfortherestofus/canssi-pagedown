@@ -572,6 +572,8 @@ class: center, middle
 
 ![](img/windmill.gif)
 
+pagedreport.rfortherestofus.com
+
 ---
 
 class: inverse, center, middle
